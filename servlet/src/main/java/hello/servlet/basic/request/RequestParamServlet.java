@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletResponse;
  * 1. 파라미터 전송 기능
  * http://localhost:8080/request-param?usernmae=hello&age
  * @author bellskysong
+ * <pre>
  * http://localhost:8080/request-param?username=hello&username=kim&age=20
- *
+ *</pre>
  */
 @WebServlet(name = "requestParamServlet", urlPatterns = "/request-param")
 public class RequestParamServlet extends HttpServlet{

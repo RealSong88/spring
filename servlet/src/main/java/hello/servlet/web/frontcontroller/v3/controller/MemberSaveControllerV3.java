@@ -1,10 +1,11 @@
-package hello.servlet.web.frontcontroller.v3;
+package hello.servlet.web.frontcontroller.v3.controller;
 
 import java.util.Map;
 
 import hello.servlet.basic.domain.member.Member;
 import hello.servlet.basic.domain.member.MemberRepository;
 import hello.servlet.web.frontcontroller.ModelView;
+import hello.servlet.web.frontcontroller.v3.ControllerV3;
 
 public class MemberSaveControllerV3 implements ControllerV3 {
 

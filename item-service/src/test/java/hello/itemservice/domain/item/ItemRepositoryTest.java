@@ -1,7 +1,6 @@
 package hello.itemservice.domain.item;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.List;
 

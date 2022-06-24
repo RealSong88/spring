@@ -25,8 +25,11 @@ class ItemRepositoryTest {
 		Item saveditem = itemRepository.save(item);
 		
 		//then
+		System.out.println("아이템 : " + itemRepository.findAll().toString() + ", 아이템id : " + item.getId() );
 		Item findItem = itemRepository.findById(item.getId());
 		
+		itemRepository.delete(item.getId());
+		System.out.println("아이템 : " + itemRepository.findAll().toString());
 		assertThat(findItem).isEqualTo(saveditem);
 	}
 	

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import hello.core.Appconfig;
+import hello.core.AppConfig;
 
 class MemberServiceTest {
 
@@ -13,7 +13,7 @@ class MemberServiceTest {
 
 	@BeforeEach
 	public void beforeEach() {
-		Appconfig appconfig = new Appconfig();
+		AppConfig appconfig = new AppConfig();
 		memberService = appconfig.memberService();
 	}
 

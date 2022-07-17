@@ -1,9 +1,5 @@
 package hello.core.singleton;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
-
 class StatefulService {
 
 	private int price; //상태를 유지하는 필드

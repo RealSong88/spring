@@ -24,13 +24,13 @@ public class MemberRepositoryTest {
 	@Rollback(false)
 	public void testMember() {
 		Member member = new Member();
-		member.setUsername("memberA");
+		member.setName("memberA");
 		Long saveId = memberRepository.save(member);
 
-		Member findMember = memberRepository.find(saveId);
+		Member findMember = memberRepository.findOne(saveId);
 
 		assertThat(findMember.getId()).isEqualTo(member.getId());
-		assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
+		assertThat(findMember.getName()).isEqualTo(member.getName());
 		assertThat(findMember).isEqualTo(member);
 	}
 

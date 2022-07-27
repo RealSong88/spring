@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.criteria.Order;
-
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +20,7 @@ public class Member {
 	@Id @GeneratedValue
 	@Column(name = "member_id")
 	private Long id;
-	private String username;
+	private String name;
 
 	@Embedded
 	private Address address;

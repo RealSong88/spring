@@ -77,6 +77,19 @@ public class Order {
 		return order;
 	}
 
+	//==비지니스 로직==//
+	/** 주문 취소 */
+	public void cancel() {
+		if (delivery.getStatus() == DeliveryStatus.COMP) {
+			throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+		}
+
+		this.setStaus(OrderStatus.CANCEL);
+		for (OrderItem orderItem : orderItems) {
+			orderItem.cancel();
+		}
+	}
+
 	//==조회 로직==//
 	/** 전체 주문 가격 조회 */
 	public int getTotalPrice() {

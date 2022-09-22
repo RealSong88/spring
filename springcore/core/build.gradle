@@ -36,9 +36,17 @@ dependencies {
 
 	runtimeOnly 'com.h2database:h2'
 
+	implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.22'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-	 	exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	 	//exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+
+	// junit에서 assertThat 사용
+	// https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all
+	testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+
+
 }
 
 tasks.named('test') {

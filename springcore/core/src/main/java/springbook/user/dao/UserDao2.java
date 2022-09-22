@@ -11,7 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import springbook.user.domain.User;
 
-public class UserDao {
+public class UserDao2 {
 
 //	private ConnectionMaker connectionMaker;
 
@@ -29,22 +29,42 @@ public class UserDao {
 		this.dataSource = dataSource;
 	}
 
-	public void add(User user) throws ClassNotFoundException, SQLException {
-//		Connection c = getConnection();
-//		Connection c = simpleConnectionMaker.makeNewConnection();
-//		Connection c = connectionMaker.makeConnection();
-		Connection c = dataSource.getConnection();
-		PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
-		ps.setString(1, user.getId());
-		ps.setString(2, user.getName());
-		ps.setString(3, user.getPassword());
+	public void addback(User user) throws ClassNotFoundException, SQLException {
 
-		ps.executeUpdate();
+		class AddStatement implements StatementStrategy {
+			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+				PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 
-		ps.close();
-		c.close();
-		System.out.println("row 생성");
+				ps.setString(1, user.getId());
+				ps.setString(2, user.getName());
+				ps.setString(3, user.getPassword());
+
+				return ps;
+			}
+		}
+
+//		StatementStrategy st = new AddStatement(user);
+		StatementStrategy st = new AddStatement();
+		jdbcContextWithStatementStrategy(st);
 	}
+	public void add(User user) throws ClassNotFoundException, SQLException {
+
+		jdbcContextWithStatementStrategy(new StatementStrategy() {
+
+			@Override
+			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+				PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
+
+				ps.setString(1, user.getId());
+				ps.setString(2, user.getName());
+				ps.setString(3, user.getPassword());
+
+				return ps;
+			}
+		});
+	}
+
+
 
 	public void del(User user) throws ClassNotFoundException, SQLException {
 //		Connection c = connectionMaker.makeConnection();
@@ -89,32 +109,14 @@ public class UserDao {
 	}
 
 	public void deleteAll() throws SQLException {
-		Connection c = null;
-		PreparedStatement ps = null;
 
-		try {
-			c = dataSource.getConnection();
-			ps = c.prepareStatement("delete from users");
-
-			ps.executeUpdate();
-
-		} catch (SQLException e) {
-			throw e;
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-				}
+		jdbcContextWithStatementStrategy(new StatementStrategy() {
+			@Override
+			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+				PreparedStatement ps = c.prepareStatement("delete from users");
+				return ps;
 			}
-			if (c != null) {
-				try {
-					c.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-
+		});
 	}
 
 	public int getCount() throws SQLException {
@@ -152,25 +154,29 @@ public class UserDao {
 		}
 	}
 
-//	public Connection getConnection() throws ClassNotFoundException, SQLException {
-//		Class.forName("org.h2.Driver");
-////		Connection c = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/jpashop","sa", "");
-//		Connection c = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/springbook","sa", "sa");
-//		return c;
-//	}
-//	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-//		UserDao dao = new UserDao();
-//
-//		User user = new User();
-//		user.setId("nadayong");
-//		user.setName("송");
-//		user.setPassword("song");
-//
-////		dao.add(user);
-//
-//		System.out.println(user.getId() + " 등록 성공");
-//
-//		User user2 = dao.get(user.getId());
-//		System.out.println(user2.getName());
-//	}
+	public void jdbcContextWithStatementStrategy(StatementStrategy stmt) throws SQLException {
+		Connection c = null;
+		PreparedStatement ps = null;
+
+		try {
+			c = dataSource.getConnection();
+			ps = stmt.makePreparedStatement(c);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }

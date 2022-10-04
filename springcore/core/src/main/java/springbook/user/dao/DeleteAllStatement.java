@@ -11,5 +11,5 @@ public class DeleteAllStatement implements StatementStrategy {
 		PreparedStatement ps = c.prepareStatement("delete from users");
 		return ps;
 	}
-
 }
+

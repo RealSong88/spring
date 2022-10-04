@@ -16,11 +16,11 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import springbook.user.domain.User;
 
-class UserDaoTest3 {
+class UserDaoTest4 {
 
 //	@Autowired ApplicationContext context;
 
-	private UserDao3 dao;
+	private UserDao4 dao;
 	private User user1;
 	private User user2;
 	private User user3;
@@ -28,8 +28,8 @@ class UserDaoTest3 {
 
 	@BeforeEach
 	void setUp() {
-		ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-		this.dao = context.getBean("userDao3", UserDao3.class);
+		ApplicationContext context = new GenericXmlApplicationContext("applicationContext4.xml");
+		this.dao = context.getBean("userDao4", UserDao4.class);
 
 //		dao = new UserDao3();
 //		DataSource dataSource = new SingleConnectionDataSource("jdbc:h2:tcp://localhost/~/springbook", "sa", "sa", true);

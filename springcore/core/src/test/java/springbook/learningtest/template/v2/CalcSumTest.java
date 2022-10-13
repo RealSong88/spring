@@ -13,12 +13,21 @@ class CalcSumTest {
 	Calculator calculator;
 	String numbFilepath;
 
+	@SuppressWarnings("resource")
 	@BeforeEach
-	public void setUp() {
+	public void setUp() throws IOException {
 		this.calculator = new Calculator();
 		this.numbFilepath = getClass().getResource("numbers.txt").getPath();
 
 		System.out.println("파일 경로 : " + this.numbFilepath);
+		BufferedReader br = null;
+		br = new BufferedReader(new FileReader("src/test/java/springbook/learningtest/template/v1/numbers2.txt"));
+		Integer res = 0;
+		String line = null;
+		while((line = br.readLine()) != null) {
+			res += Integer.valueOf(line);
+		}
+		assertThat(res).isEqualTo(27);
 	}
 
 	@Test

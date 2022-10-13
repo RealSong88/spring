@@ -1,26 +1,41 @@
-package springbook.user.dao;
+package springbook.user.dao.v1;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.SQLException;
+import java.sql.SQLNonTransientException;
 
 import javax.sql.DataSource;
 
+import org.h2.jdbc.JdbcSQLNonTransientException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import springbook.user.dao.v1.UserDao;
 import springbook.user.domain.User;
 
-class UserDaoTest4 {
+@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(locations = "/applicationContext.xml")
+@ContextConfiguration(locations = "/test-applicationContext.xml")
+//@DirtiesContext
+class UserDaoTest {
 
 //	@Autowired ApplicationContext context;
 
-	private UserDao4 dao;
+	@Autowired
+	private UserDao dao;
 	private User user1;
 	private User user2;
 	private User user3;
@@ -28,10 +43,9 @@ class UserDaoTest4 {
 
 	@BeforeEach
 	void setUp() {
-		ApplicationContext context = new GenericXmlApplicationContext("applicationContext4.xml");
-		this.dao = context.getBean("userDao4", UserDao4.class);
-
-//		dao = new UserDao3();
+//		ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
+//		this.dao = context.getBean("userDao", UserDao.class);
+//
 //		DataSource dataSource = new SingleConnectionDataSource("jdbc:h2:tcp://localhost/~/springbook", "sa", "sa", true);
 //		dao.setDataSource(dataSource);
 
@@ -61,7 +75,7 @@ class UserDaoTest4 {
 		user.setPassword("비밀");
 
 
-		dao.del(user);
+//		dao.del(user);
 		dao.add(user);
 		assertThat(dao.getCount()).isEqualTo(1);
 

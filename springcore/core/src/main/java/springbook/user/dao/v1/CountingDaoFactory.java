@@ -1,4 +1,4 @@
-package springbook.user.dao;
+package springbook.user.dao.v1;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package springbook.user.dao;
+package springbook.user.dao.v1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,17 +11,17 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import springbook.user.domain.User;
 
-public class UserDao4 {
+public class UserDao3 {
 
 	private JdbcContext jdbcContext;
+
+	public void setJdbcContext(JdbcContext jdbcContext) {
+		this.jdbcContext = jdbcContext;
+	}
 
 	private DataSource dataSource;
 
 	public void setDataSource(DataSource dataSource) {
-		this.jdbcContext = new JdbcContext();
-
-		this.jdbcContext.setDataSource(dataSource);
-
 		this.dataSource = dataSource;
 	}
 
@@ -85,15 +85,14 @@ public class UserDao4 {
 	}
 
 	public void deleteAll() throws SQLException {
-//		executeSql("delete from users");
-		this.jdbcContext.executeSql("delete from users");
-//		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
-//			@Override
-//			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-//				PreparedStatement ps = c.prepareStatement("delete from users");
-//				return ps;
-//			}
-//		});
+
+		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
+			@Override
+			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+				PreparedStatement ps = c.prepareStatement("delete from users");
+				return ps;
+			}
+		});
 	}
 
 	public int getCount() throws SQLException {
@@ -131,13 +130,4 @@ public class UserDao4 {
 		}
 	}
 
-//	@SuppressWarnings("unused")
-//	private void executeSql(final String query) throws SQLException {
-//		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
-//
-//			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-//				return c.prepareStatement(query);
-//			}
-//		});
-//	}
 }

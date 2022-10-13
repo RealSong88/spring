@@ -1,4 +1,4 @@
-package springbook.user.dao;
+package springbook.user.dao.v1;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,18 +9,17 @@ import javax.sql.DataSource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
+import springbook.user.dao.v1.UserDao2;
 import springbook.user.domain.User;
 
-class UserDaoTest3 {
+class UserDaoTest2 {
 
 //	@Autowired ApplicationContext context;
 
-	private UserDao3 dao;
+	private UserDao2 dao;
 	private User user1;
 	private User user2;
 	private User user3;
@@ -28,12 +27,12 @@ class UserDaoTest3 {
 
 	@BeforeEach
 	void setUp() {
-		ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-		this.dao = context.getBean("userDao3", UserDao3.class);
+//		ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
+//		this.dao = context.getBean("userDao", UserDao.class);
 
-//		dao = new UserDao3();
-//		DataSource dataSource = new SingleConnectionDataSource("jdbc:h2:tcp://localhost/~/springbook", "sa", "sa", true);
-//		dao.setDataSource(dataSource);
+		dao = new UserDao2();
+		DataSource dataSource = new SingleConnectionDataSource("jdbc:h2:tcp://localhost/~/springbook", "sa", "sa", true);
+		dao.setDataSource(dataSource);
 
 		this.user1 = new User("test1", "테스트1", "spring1");
 		this.user2 = new User("test2", "테스트2", "spring2");
@@ -61,7 +60,7 @@ class UserDaoTest3 {
 		user.setPassword("비밀");
 
 
-		dao.del(user);
+//		dao.del(user);
 		dao.add(user);
 		assertThat(dao.getCount()).isEqualTo(1);
 

@@ -1,8 +1,8 @@
-package springbook.user.chap05.user.service;
+package springbook.user.chap06.user.service;
 
-import springbook.user.chap05.user.domain.User;
+import springbook.user.chap06.user.domain.User;
 
-public class TestUserService extends UserService {
+public class TestUserService extends UserServiceImpl {
 
 	private String id;
 	
